@@ -3,17 +3,25 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
-class InstallCommand extends Command
+class RefreshCommand extends Command
 {
-    protected $signature = 'shop:install';
+    protected $signature = 'shop:refresh';
 
-    protected $description = 'Installation';
+    protected $description = 'Refresh';
 
     public function handle()
     {
-        $this->call('storage:link');
-        $this->call('migrate');
+        if(app()->isProduction()){
+            return self::FAILURE;
+        }
+
+        Storage::deleteDirectory('images/products');
+
+        $this->call('migrate:fresh', [
+            '--seed' => true
+        ]);
 
         return self::SUCCESS;
     }
