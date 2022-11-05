@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasSlug
 {
-    //todo: dz (change append time, search slug in db when find add new increment prop from trait)
+    //Todo: dz (change append time, search slug in db when find add new increment prop from trait)
     protected static function bootHasSlug()
     {
         static::creating(function(Model $item) {
